@@ -23,8 +23,7 @@ Basic twelve-tone music theory including notes, note intervals, scales, chords
 
 ### Note
 
-A Note has an Integer value indicating its place on the chromatic scale.  Compatible with
-the <a href="http://www.harmony-central.com/MIDI/Doc/table2.html">MIDI note number chart</a>.
+A Note has an Integer value indicating its place on the chromatic scale. Compatible with MIDI note numbers - see http://www.phys.unsw.edu.au/jw/notes.html for more info about MIDI.
 
 ### NoteInterval
 
@@ -118,8 +117,6 @@ around the scale to the next octave.
 
 #### Chords
 
-I found <a href="http://www.harmony-central.com/Guitar/chord-and-theory-chart.txt">several</a> <a href="http://jmdl.com/howard/music/quick_crd_ref.html">references</a> on the Internet for selecting
-NoteIntervals for common chords.
 ```
   irb(main):001:0> Note.new("C").major_chord
   => #<Chord:0x267a834 @intervals=[#<NoteInterval:0x267a71c @value=0>, #<NoteInterval:0x267a708 @value=4>, #<NoteInterval:0x267a6f4 @value=7>], @root_note=#<Note:0x267a870 @value=60>>
@@ -158,10 +155,6 @@ irb(main):001:0> Note.new("C").major_scale.valid_chord_names_for_degree(1)
 
 Given a Scale, you may describe a Chord to be "walked" up the scale such that
 only Notes in that Scale are used.
-
-The idea is explained well in the following <a href="http://www.youtube.com/watch?v=fjDGl4GJosI">YouTube Video</a>
-
-As in that YouTube video, I'll demonstrate by using :maj7_chord
 
 harmonized_chord(start_degree,chord_name) => Chord
 ```
@@ -202,6 +195,6 @@ Or, get your Phryg on
 
 These projects use rb-music-theory
 
-Olympiano(http://github.com/chrisbratlien/olympiano/tree/master)
+Olympiano - http://github.com/chrisbratlien/olympiano/tree/master
 
-Rollo(http://github.com/chrisbratlien/rollo/tree/master)
+Rollo - http://github.com/chrisbratlien/rollo/tree/master
