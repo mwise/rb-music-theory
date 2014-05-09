@@ -47,20 +47,38 @@ describe NoteInterval do
 end
 
 describe RootNoteWithIntervals do
+  let(:subject) { Note.new("C").major_scale }
 
   it "should contain an integer note value" do
-    Note.new("C").major_scale.contains_note_value?(Note.new("C").value).should == true
+    subject.contains_note_value?(Note.new("C").value).should == true
   end
 
   it "should contain note values of another" do
-    Note.new("C").major_scale.contains_note_values_of?(Note.new("C").major_chord).should == true
+    subject.contains_note_values_of?(Note.new("C").major_chord).should == true
   end
   it "should contain note names of another" do
-    Note.new("C").major_scale.contains_note_names_of?(Note.new("C").major_chord).should == true
+    subject.contains_note_names_of?(Note.new("C").major_chord).should == true
   end
 
   it "should describe the note names in common between scales" do
-    Note.new("C").major_scale.note_names_in_common(Note.new("A").minor_scale).should == ['C','D','E','F','G','A','B']
+    subject.note_names_in_common(Note.new("A").minor_scale).should == ['C','D','E','F','G','A','B']
+  end
+
+  it "describes the interval names" do
+    subject.interval_names.should == %w{ 1 2 3 4 5 6 7 }
+  end
+
+  it "describes the interval values" do
+    subject.interval_values.should == [0, 2, 4, 5, 7, 9, 11]
+  end
+
+  it "describes the note interval / note pairs" do
+    subject = RootNoteWithIntervals.new(Note.new("C"), [2, 4])
+    subject.nin_pairs[0][0].should == 2
+    subject.nin_pairs[0][1].should be_a(Note)
+
+    subject.nin_pairs[1][0].should == 4
+    subject.nin_pairs[1][1].should be_a(Note)
   end
 
 end
