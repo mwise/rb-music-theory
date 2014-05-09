@@ -81,6 +81,27 @@ describe RootNoteWithIntervals do
     subject.nin_pairs[1][1].should be_a(Note)
   end
 
+  it "adds a note" do
+    note = Note.new("F#")
+    subject.add(note).interval_values.should include(6)
+  end
+
+  it "adds an interval" do
+    interval = NoteInterval.new(8)
+    subject.add(interval).interval_values.should include(8)
+  end
+
+  it "adds another RootNoteWithIntervals" do
+    other_subject = RootNoteWithIntervals.new(Note.new("C#"), [0, 2])
+
+    subject.add(other_subject).interval_values.should == [0, 1, 2, 3, 4, 5, 7, 9, 11]
+  end
+
+  it "adds an array of intervals" do
+    other_subject = [NoteInterval.new(1), NoteInterval.new(3)]
+    subject.add(other_subject).interval_values.should == [0, 1, 2, 3, 4, 5, 7, 9, 11]
+  end
+
 end
 
 describe Chord do

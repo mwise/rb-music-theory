@@ -60,7 +60,7 @@ module RBMusicTheory
     end
 
     def add_similar(other)
-      self.class.new(@root_note, @intervals + other.notes.map{|n| NoteInterval.new(@root_note.distance_to(n))}.to_set )
+      self.class.new(@root_note, @intervals + other.notes.map { |n| NoteInterval.new(@root_note.distance_to(n)) }.to_set )
     end
 
     def remove(less)
