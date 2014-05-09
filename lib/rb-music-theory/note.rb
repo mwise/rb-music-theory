@@ -69,15 +69,15 @@ module RBMusicTheory
     end
 
     def self.random_scale_method
-      (Note.scale_methods - ["chromatic_scale"]).pick
+      (Note.scale_methods - ["chromatic_scale"]).sample
     end
 
     def self.random_chord_method
-      Note.chord_methods.pick
+      Note.chord_methods.sample
     end
 
     def self.random_chord_or_scale_method
-      [Note.random_chord_method,Note.random_scale_method].pick
+      [Note.random_chord_method,Note.random_scale_method].sample
     end
 
   end
