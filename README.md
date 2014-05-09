@@ -202,6 +202,6 @@ Or, get your Phryg on
 
 These projects use rb-music-theory
 
-Olympiano(github.com/chrisbratlien/olympiano/tree/master)
+Olympiano(http://github.com/chrisbratlien/olympiano/tree/master)
 
 Rollo(http://github.com/chrisbratlien/rollo/tree/master)
