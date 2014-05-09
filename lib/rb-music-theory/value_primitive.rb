@@ -13,7 +13,6 @@ module RBMusicTheory
      end
 
      def hash
-       #puts "hash was called"
        @value
      end
 
