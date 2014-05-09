@@ -1,7 +1,7 @@
 module RBMusicTheory
-  
+
   class ValuePrimitive
-  
+
     attr_reader :value
 
      def initialize(val)
@@ -16,7 +16,7 @@ module RBMusicTheory
        #puts "hash was called"
        @value
      end
-  
+
     def ==(other)
       @value == other.value
     end
@@ -43,7 +43,7 @@ module RBMusicTheory
     end
     alias - minus_interval
 
-    def <(other_interval) 
+    def <(other_interval)
       self.value < other_interval.value
     end
 

@@ -12,4 +12,4 @@ module RBMusicTheory
     end
   end
 end
-  
+

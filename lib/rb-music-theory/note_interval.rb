@@ -1,7 +1,7 @@
 module RBMusicTheory
-  
+
   class NoteInterval < ValuePrimitive
-  
+
     def short_name
       names = ["1", "b2", "2", "b3", "3", "4", "b5", "5", "#5", "6", "b7", "7",
                "8", "b9", "9", "#9","10","11","#11","12","b13","13","#13","14","15"][@value]
@@ -14,30 +14,30 @@ module RBMusicTheory
       :min3   => 3,
       :maj3   => 4,
       :per4   => 5,
-      :aug4   => 6, 
-      :dim5 => :aug4, 
+      :aug4   => 6,
+      :dim5 => :aug4,
       :b5 => :aug4,
       :per5   => 7,
-      :sharp5 => 8, 
-      :aug5 => :sharp5, 
-      :min6 => :sharp5, 
-      :maj6 => 9, 
+      :sharp5 => 8,
+      :aug5 => :sharp5,
+      :min6 => :sharp5,
+      :maj6 => 9,
       :bb7 => :maj6,
-      :min7 => 10, 
+      :min7 => 10,
       :b7 => :min7,
       :maj7 => 11,
       :octave => 12,
-      :min9 => 13, 
+      :min9 => 13,
       :b9 => :min9,
       :maj9 => 14,
-      :aug9 => 15, 
-      :sharp9 => :aug9,    
-      :min11 => 16, 
+      :aug9 => 15,
+      :sharp9 => :aug9,
+      :min11 => 16,
       :b11 => :min11,
       :maj11 => 17,
       :sharp11 => 18,
       :maj12 => 19,
-      :min13 => 20, 
+      :min13 => 20,
       :b13 => :min13,
       :maj13 => 21,
       :sharp13 => 22,
@@ -74,7 +74,7 @@ module RBMusicTheory
       :maj7     => [0,4,7,11],
       :maj9     => [0,4,7,11,14],
       :maj11    => [0,4,7,11,14,17],
-            
+
       :maj_add2 => [0,2,4,7],
       :maj_add4 => [0,4,5,7],
       :maj_add9 => [0,4,7,14],
@@ -104,12 +104,12 @@ module RBMusicTheory
       :sixth    => [0,4,7,9],
       :six_nine => [0,4,7,9,14],
 
-      :seventh        => [0,4,7,10], 
+      :seventh        => [0,4,7,10],
       :dom7           => :seventh,
       :ninth          => [0,4,7,10,14],
       :eleventh       => [0,4,7,10,14,17],
       :thirteenth     => [0,4,7,10,14,17,21],
-      
+
       :seventh_sharp9 => [0,4,7,10,15],
       :seventh_flat9  => [0,4,7,10,13],
       :seventh_b9     => :seventh_flat9,
@@ -124,7 +124,7 @@ module RBMusicTheory
       :sus2 =>   [0,2,7],
       :sus4 =>   [0,5,7],
    }
- 
+
    def self.locate_it(key,set)
      result = set[key]
      if result.kind_of?(Symbol)
@@ -140,43 +140,43 @@ module RBMusicTheory
       end
     end
 
-   SCALE_SETS.each do |symbol,value|     
-     full_method_name = (symbol.to_s + '_set').to_sym     
+   SCALE_SETS.each do |symbol,value|
+     full_method_name = (symbol.to_s + '_set').to_sym
       self.class.send :define_method, full_method_name.to_sym do
         NoteInterval.locate_it(symbol,SCALE_SETS).map{|n| NoteInterval.new(n)}
       end
     end
-    
-   CHORD_SETS.each do |symbol,value|     
-     full_method_name = (symbol.to_s + '_chord').to_sym     
+
+   CHORD_SETS.each do |symbol,value|
+     full_method_name = (symbol.to_s + '_chord').to_sym
       self.class.send :define_method, full_method_name.to_sym do
         NoteInterval.locate_it(symbol,CHORD_SETS).map{|n| NoteInterval.new(n)}
       end
     end
- 
- 
+
+
     def self.zero_set(set)
       set.map{|n| n - set[0]}
     end
-  
+
     def self.shift_set(set)
       set[1..-1] << set[0] + 12
     end
-  
+
     def self.shift_to_top(set)
       n = set[0]
       top = set[-1]
       while n <= top
         n += 12
       end
-    
+
       set[1..-1] << n
     end
-  
-  
+
+
     def self.shift_and_zero_set(set)
       NoteInterval.zero_set(NoteInterval.shift_set(set))
     end
-  
+
   end
 end

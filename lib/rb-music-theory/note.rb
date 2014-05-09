@@ -1,12 +1,12 @@
 module RBMusicTheory
-  
+
   class Note < ValuePrimitive
 
     # define a bunch of scale instance methods  (ex: Note.major_scale)
     NoteInterval::SCALE_SETS.each do |symbol,value|
       method_name = symbol.to_s + '_scale'
       Note.send :define_method, method_name.to_sym do
-        intervals = NoteInterval.locate_it(symbol,NoteInterval::SCALE_SETS).map{|n| NoteInterval.new(n)}          
+        intervals = NoteInterval.locate_it(symbol,NoteInterval::SCALE_SETS).map{|n| NoteInterval.new(n)}
         Scale.new(self,intervals)
       end
     end
@@ -14,12 +14,12 @@ module RBMusicTheory
     # define a bunch of chord instance methods  (ex: Note.min7_chord)
     NoteInterval::CHORD_SETS.each do |symbol,value|
       method_name = symbol.to_s + '_chord'
-      Note.send :define_method, method_name.to_sym do          
-        intervals = NoteInterval.locate_it(symbol,NoteInterval::CHORD_SETS).map{|n| NoteInterval.new(n)}          
+      Note.send :define_method, method_name.to_sym do
+        intervals = NoteInterval.locate_it(symbol,NoteInterval::CHORD_SETS).map{|n| NoteInterval.new(n)}
         Chord.new(self,intervals)
       end
     end
-  
+
     def self.twelve_tones
       ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
     end
@@ -36,9 +36,9 @@ module RBMusicTheory
       end
     end
 
-  
+
     def self.value_from_name(name)
-      #The octave isn't supplied, so 
+      #The octave isn't supplied, so
       #default to octave #4 (see MIDI reference at http://www.harmony-central.com/MIDI/Doc/table2.html)
       result = Note.twelve_tones.index(name) || Note.flat_twelve_tones.index(name)
       result += 60
@@ -55,23 +55,23 @@ module RBMusicTheory
     def octave
       (@value / 12) - 1
     end
-  
+
     def name
       Note.name_from_value(@value)
-    end    
+    end
 
     def self.chord_methods
       Note.instance_methods.select{|m| m =~ Regexp.new(/chord$/)}
     end
-  
+
     def self.scale_methods
       Note.instance_methods.select{|m| m =~ Regexp.new(/scale$/)}
     end
-  
+
     def self.random_scale_method
       (Note.scale_methods - ["chromatic_scale"]).pick
     end
-  
+
     def self.random_chord_method
       Note.chord_methods.pick
     end

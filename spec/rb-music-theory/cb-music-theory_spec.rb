@@ -1,8 +1,8 @@
 require_relative '../spec_helper'
 
 describe Note do
-  
-  
+
+
   it "should produce octaves with plus_interval correctly" do
     Note.twelve_tones.each do |tone_name|
       orig_note = Note.new(tone_name)
@@ -15,17 +15,17 @@ describe Note do
   it "plus_interval should fail when passed another Note" do
     proc { Note.new("C").plus_interval(Note.new("C")) }.should raise_error(TypeError)
   end
-    
+
 end
 
 
 describe NoteInterval do
-  
+
   it "dorian set should equal a shifted ionian set" do
-      NoteInterval.dorian_set.map{|i| i.value}.should == 
+      NoteInterval.dorian_set.map{|i| i.value}.should ==
       NoteInterval.shift_and_zero_set(NoteInterval.ionian_set).map{|i| i.value}
   end
-  
+
   it "phrygian mode should equal shifted dorian mode" do
     NoteInterval.phrygian_set.map{|i| i.value}.should == NoteInterval.shift_and_zero_set(NoteInterval.dorian_set).map{|i| i.value}
   end
@@ -49,27 +49,27 @@ end
 
 describe RootNoteWithIntervals do
   it "should contain an integer note value" do
-    Note.new("C").major_scale.contains_note_value?(Note.new("C").value).should == true  
+    Note.new("C").major_scale.contains_note_value?(Note.new("C").value).should == true
   end
-  
+
   it "should contain note values of another" do
-    Note.new("C").major_scale.contains_note_values_of?(Note.new("C").major_chord).should == true  
+    Note.new("C").major_scale.contains_note_values_of?(Note.new("C").major_chord).should == true
   end
   it "should contain note names of another" do
-    Note.new("C").major_scale.contains_note_names_of?(Note.new("C").major_chord).should == true  
+    Note.new("C").major_scale.contains_note_names_of?(Note.new("C").major_chord).should == true
   end
 
   it "should describe the note names in common between scales" do
     Note.new("C").major_scale.note_names_in_common(Note.new("A").minor_scale).should == ['C','D','E','F','G','A','B']
   end
-        
+
 end
 
 describe Chord do
   it "should produce a major chord" do
     Note.new("C").major_chord.note_names.should == ["C", "E", "G"]
   end
-  
+
   it "chord inversion should have the same note names" do
     c1 = Note.new("C").major_chord
     c2 = c1.invert
@@ -81,7 +81,7 @@ describe Chord do
   it "should remove a note" do
     Note.new("C").major_chord.remove_note(Note.new("C")).note_names.should == ["E","G"]
   end
-    
+
   it "should add a note" do
     Note.new("C").major_chord.add_note(Note.new("B")).note_names.should == ["C","E","G","B"]
   end
@@ -100,7 +100,7 @@ describe Scale do
     @c_maj_scale = Note.new("C").major_scale
     @c_maj_scale_note_names = ["C", "D", "E", "F", "G", "A", "B"]
   end
-  
+
 
   it "should produce a chromatic scale" do
     Note.new("C").chromatic_scale.note_names.should == ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
@@ -126,7 +126,7 @@ describe Scale do
     Note.new("A").melodic_minor_scale.note_names.should == ["A", "B", "C", "D", "E", "F#", "G#"]
   end
 
-  it "should report the correct interval sizes for degrees" do    
+  it "should report the correct interval sizes for degrees" do
     @c_maj_scale.interval_for_degree(1).value.should == 0
     @c_maj_scale.interval_for_degree(2).value.should == 2
     @c_maj_scale.interval_for_degree(3).value.should == 4
@@ -143,12 +143,12 @@ describe Scale do
     @c_maj_scale.interval_for_degree(14).value.should == 23
     @c_maj_scale.interval_for_degree(15).value.should == 24
   end
-  
-  
+
+
  it "should subtract a chord" do
    (Note.new("C").major_scale - Note.new("C").major_chord).note_names.should == ["D","F","A","B"]
  end
- 
+
  it "should produce a harmonized scale when given a chord" do
    Note.new("C").major_scale.all_harmonized_chords(:major_chord).map{|c| c.note_names}.should ==
    [["C","E","G"],["D","F","A"],["E","G","B"],["F","A","C"],["G","B","D"],["A","C","E"],["B","D","F"]]
@@ -160,7 +160,7 @@ describe Scale do
        #puts sn + ' ' + cn
         Note.new("C").send(sn).harmonized_chord(1,cn).note_names.should == Note.new("C").send(cn).note_names
       }
-    }   
+    }
  end
- 
+
 end

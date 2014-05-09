@@ -7,7 +7,7 @@ GEM_EMAIL = "chrisbratlien@gmail.com"
 GEM_NAME = "rb-music-theory"
 GEM_CLEAN = ["log", "pkg"]
 GEM_EXTRAS = { :has_rdoc => true, :extra_rdoc_files => %w[ README.textile LICENSE TODO ] }
- 
+
 PROJECT_NAME = "rb-music-theory"
 PROJECT_URL = "http://github.com/chrisbratlien/rb-music-theory/tree/master"
 PROJECT_DESCRIPTION = PROJECT_SUMMARY = "This gem models notes, note intervals, scales, and chords"

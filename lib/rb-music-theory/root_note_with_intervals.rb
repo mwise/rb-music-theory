@@ -1,11 +1,11 @@
 require 'set'
 
 module RBMusicTheory
-  
+
   class RootNoteWithIntervals
-  
+
     attr_reader :root_note, :intervals
- 
+
    def initialize(root_note,intervals)
      @root_note = root_note
      if intervals.kind_of?(Array)
@@ -14,7 +14,7 @@ module RBMusicTheory
        @intervals = SortedSet.new(intervals)
      end
    end
- 
+
    def notes
      @intervals.map{|i| @root_note.plus_interval(i)}
    end
@@ -22,7 +22,7 @@ module RBMusicTheory
    def note_names
      self.notes.map{|n| n.name}
    end
- 
+
    def note_values
      self.notes.map{|n| n.value}
    end
@@ -30,11 +30,11 @@ module RBMusicTheory
    def interval_names
      @intervals.map{|i| i.short_name}
    end
- 
+
    def interval_values
      @intervals.map{|i| i.value}
    end
-  
+
    def nin_pairs
      # [NoteInterval,Note] pairs
      @intervals.map{|i| [i,@root_note.plus_interval(i)]}
@@ -82,21 +82,21 @@ module RBMusicTheory
    alias - remove
    alias remove_intervals remove
    alias remove_interval remove
- 
- 
+
+
    def remove_note(note)
      self.class.new(@root_note,@intervals.reject{|i| @root_note + i == note})
    end
- 
+
    def remove_similar_by_note_names(other)
      self.class.new(@root_note,@intervals.reject{|i| other.contains_note_names_of?(@root_note + i)})
    end
- 
+
    def remove_similar_by_note_values(other)
      self.class.new(@root_note,@intervals.reject{|i| other.contains_note_values_of?(@root_note + i)})
    end
- 
- 
+
+
    #def remove_interval(i)
   #   remove_intervals([i])
   # end
@@ -121,11 +121,11 @@ module RBMusicTheory
     def invert_once
       self.class.new(@root_note,NoteInterval.shift_set(@intervals.to_a))
     end
-  
+
     def invert_to_top
       self.class.new(@root_note,NoteInterval.shift_to_top(@intervals.to_a))
     end
-    
+
     alias invert invert_to_top
 
 
@@ -140,7 +140,7 @@ module RBMusicTheory
         self.note_values.to_set.superset?(other.note_values.to_set)
       end
     end
-  
+
     def note_values_contained_by?(other)
       other.contains_note_values_of?(self)
     end
@@ -153,14 +153,14 @@ module RBMusicTheory
        self.note_names.to_set.superset?(other.note_names.to_set)
      end
     end
-  
+
     def note_names_contained_by?(other)
       other.contains_note_names_of?(self)
     end
-    
+
     def note_names_in_common(other)
       note_names.select{|n| other.note_names.include?(n)}
     end
-  
+
   end
 end

@@ -4,7 +4,7 @@ h2. Install
 
 At the shell:
 <pre><code>
-  # git clone git://github.com/chrisbratlien/rb-music-theory.git 
+  # git clone git://github.com/chrisbratlien/rb-music-theory.git
   # cd rb-music-theory
   # rake gem
   # rake install
@@ -26,7 +26,7 @@ the <a href="http://www.harmony-central.com/MIDI/Doc/table2.html">MIDI note numb
 
 h3. NoteInterval
 
-A NoteInterval is used to transform a Note into a new Note.  
+A NoteInterval is used to transform a Note into a new Note.
 (Note + Fixnum => Note)
 (Note + NoteInterval => Note)
 
@@ -47,7 +47,7 @@ Notice:
 * NoteInterval.octave is the same as NoteInterval.new(12)
 * plus_interval may also be used instead of + to chain the method calls
 
-NoteIntervals can be added together.  
+NoteIntervals can be added together.
 (NoteInterval + Fixnum => NoteInterval)
 (NoteInterval + NoteInterval => NoteInterval)
 <pre><code>
@@ -66,7 +66,7 @@ a root Note, and an array of NoteIntervals.
 
 As shown above, the NoteIntervals applied to the root
 Note will yield the actual Notes in the Scale or Chord.
- 
+
 Often you'll just ask a Scale or Chord for its note_names.  But you still have access to the intervals, notes and
 note_values too.
 
@@ -115,8 +115,8 @@ around the scale to the next octave.
 h4. Chords
 
 
-I found <a href="http://www.harmony-central.com/Guitar/chord-and-theory-chart.txt">several</a> <a href="http://jmdl.com/howard/music/quick_crd_ref.html">references</a> on the Internet for selecting 
-NoteIntervals for common chords.  
+I found <a href="http://www.harmony-central.com/Guitar/chord-and-theory-chart.txt">several</a> <a href="http://jmdl.com/howard/music/quick_crd_ref.html">references</a> on the Internet for selecting
+NoteIntervals for common chords.
 <pre><code>
   irb(main):001:0> Note.new("C").major_chord
   => #<Chord:0x267a834 @intervals=[#<NoteInterval:0x267a71c @value=0>, #<NoteInterval:0x267a708 @value=4>, #<NoteInterval:0x267a6f4 @value=7>], @root_note=#<Note:0x267a870 @value=60>>
@@ -154,7 +154,7 @@ irb(main):001:0> Note.new("C").major_scale.valid_chord_names_for_degree(1)
 
 
 
-h4. Harmonized Chord-Scales 
+h4. Harmonized Chord-Scales
 
 Given a Scale, you may describe a Chord to be "walked" up the scale such that
 only Notes in that Scale are used.
@@ -188,14 +188,14 @@ all_harmonized_chords(chord_name) => array of Chords
 Or, to get the MIDI note numbers instead of the note names
 <pre><code>
   irb(main):004:0> Note.new("C").major_scale.all_harmonized_chords(:maj7_chord).map{|c| c.note_values}
-  => [[60, 64, 67, 71], [62, 65, 69, 72], [64, 67, 71, 74], [65, 69, 72, 76], [67, 71, 74, 77], [69, 72, 76, 79], [71, 74, 77, 81]] 
+  => [[60, 64, 67, 71], [62, 65, 69, 72], [64, 67, 71, 74], [65, 69, 72, 76], [67, 71, 74, 77], [69, 72, 76, 79], [71, 74, 77, 81]]
 </code></pre>
 
 Or, get your Phryg on
-<pre><code>  
+<pre><code>
   irb(main):017:0> Note.new("C").phrygian_scale.all_harmonized_chords(:min7_chord).map{|c| c.note_names}
   => [["C", "D#", "G", "A#"], ["C#", "F", "G#", "C"], ["D#", "G", "A#", "C#"], ["F", "G#", "C", "D#"], ["G", "A#", "C#", "F"], ["G#", "C", "D#", "G"], ["A#", "C#", "F", "G#"]]
-  irb(main):018:0>  
+  irb(main):018:0>
 </code></pre>
 
 
