@@ -125,35 +125,34 @@ module RBMusicTheory
       :sus4 =>   [0,5,7],
    }
 
-   def self.locate_it(key,set)
+   def self.locate_it(key, set)
      result = set[key]
      if result.kind_of?(Symbol)
-       NoteInterval.locate_it(result,set)
+       NoteInterval.locate_it(result, set)
      else
        result
      end
    end
 
-   INTERVAL_NAMES.each do |symbol,value|
+   INTERVAL_NAMES.each do |symbol, value|
       self.class.send :define_method, symbol.to_sym do
-        NoteInterval.new(NoteInterval.locate_it(symbol,INTERVAL_NAMES))
+        NoteInterval.new(NoteInterval.locate_it(symbol, INTERVAL_NAMES))
       end
     end
 
-   SCALE_SETS.each do |symbol,value|
+   SCALE_SETS.each do |symbol, value|
      full_method_name = (symbol.to_s + '_set').to_sym
       self.class.send :define_method, full_method_name.to_sym do
-        NoteInterval.locate_it(symbol,SCALE_SETS).map{|n| NoteInterval.new(n)}
+        NoteInterval.locate_it(symbol, SCALE_SETS).map { |n| NoteInterval.new(n) }
       end
     end
 
    CHORD_SETS.each do |symbol,value|
      full_method_name = (symbol.to_s + '_chord').to_sym
       self.class.send :define_method, full_method_name.to_sym do
-        NoteInterval.locate_it(symbol,CHORD_SETS).map{|n| NoteInterval.new(n)}
+        NoteInterval.locate_it(symbol, CHORD_SETS).map { |n| NoteInterval.new(n) }
       end
     end
-
 
     def self.zero_set(set)
       set.map{|n| n - set[0]}
@@ -172,7 +171,6 @@ module RBMusicTheory
 
       set[1..-1] << n
     end
-
 
     def self.shift_and_zero_set(set)
       NoteInterval.zero_set(NoteInterval.shift_set(set))
