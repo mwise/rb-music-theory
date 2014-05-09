@@ -2,7 +2,6 @@ require_relative '../spec_helper'
 
 describe Note do
 
-
   it "should produce octaves with plus_interval correctly" do
     Note.twelve_tones.each do |tone_name|
       orig_note = Note.new(tone_name)
@@ -17,7 +16,6 @@ describe Note do
   end
 
 end
-
 
 describe NoteInterval do
 
@@ -45,9 +43,11 @@ describe NoteInterval do
   it "locrian mode should equal shifted aeolian mode" do
     NoteInterval.locrian_set.map{|i| i.value}.should == NoteInterval.shift_and_zero_set(NoteInterval.aeolian_set).map{|i| i.value}
   end
+
 end
 
 describe RootNoteWithIntervals do
+
   it "should contain an integer note value" do
     Note.new("C").major_scale.contains_note_value?(Note.new("C").value).should == true
   end
@@ -66,6 +66,7 @@ describe RootNoteWithIntervals do
 end
 
 describe Chord do
+
   it "should produce a major chord" do
     Note.new("C").major_chord.note_names.should == ["C", "E", "G"]
   end
@@ -90,8 +91,6 @@ describe Chord do
     (Note.new("C").maj7_chord + Note.new("D").minor_chord).notes.should == Note.new("C").major_scale.notes
   end
 
-
-
 end
 
 describe Scale do
@@ -100,7 +99,6 @@ describe Scale do
     @c_maj_scale = Note.new("C").major_scale
     @c_maj_scale_note_names = ["C", "D", "E", "F", "G", "A", "B"]
   end
-
 
   it "should produce a chromatic scale" do
     Note.new("C").chromatic_scale.note_names.should == ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
@@ -144,23 +142,21 @@ describe Scale do
     @c_maj_scale.interval_for_degree(15).value.should == 24
   end
 
+  it "should subtract a chord" do
+    (Note.new("C").major_scale - Note.new("C").major_chord).note_names.should == ["D","F","A","B"]
+  end
 
- it "should subtract a chord" do
-   (Note.new("C").major_scale - Note.new("C").major_chord).note_names.should == ["D","F","A","B"]
- end
+  it "should produce a harmonized scale when given a chord" do
+    Note.new("C").major_scale.all_harmonized_chords(:major_chord).map{|c| c.note_names}.should ==
+    [["C","E","G"],["D","F","A"],["E","G","B"],["F","A","C"],["G","B","D"],["A","C","E"],["B","D","F"]]
+  end
 
- it "should produce a harmonized scale when given a chord" do
-   Note.new("C").major_scale.all_harmonized_chords(:major_chord).map{|c| c.note_names}.should ==
-   [["C","E","G"],["D","F","A"],["E","G","B"],["F","A","C"],["G","B","D"],["A","C","E"],["B","D","F"]]
- end
-
- it "should build the same chord when harmonizing a scale as when building that chord off the root note" do
-   Note.scale_methods.each{ |sn|
-     Note.new("C").send(sn).valid_chord_names_for_degree(1).each {|cn|
-       #puts sn + ' ' + cn
-        Note.new("C").send(sn).harmonized_chord(1,cn).note_names.should == Note.new("C").send(cn).note_names
-      }
-    }
- end
+  it "should build the same chord when harmonizing a scale as when building that chord off the root note" do
+    Note.scale_methods.each{ |sn|
+      Note.new("C").send(sn).valid_chord_names_for_degree(1).each {|cn|
+         Note.new("C").send(sn).harmonized_chord(1,cn).note_names.should == Note.new("C").send(cn).note_names
+       }
+     }
+  end
 
 end
