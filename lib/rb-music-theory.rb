@@ -7,7 +7,5 @@ require dir + '/root_note_with_intervals'
 require dir + '/chord'
 require dir + '/scale'
 require dir + '/experimental_scales'
-require dir + '/instrument/guitar/guitar_string'
-require dir + '/instrument/guitar/guitar'
 
 include RBMusicTheory
