@@ -81,26 +81,56 @@ describe RootNoteWithIntervals do
     subject.nin_pairs[1][1].should be_a(Note)
   end
 
-  it "adds a note" do
-    note = Note.new("F#")
-    subject.add(note).interval_values.should include(6)
+  describe "#add" do
+
+    it "adds a note" do
+      note = Note.new("F#")
+      subject.add(note).interval_values.should include(6)
+    end
+
+    it "adds an interval" do
+      interval = NoteInterval.new(8)
+      subject.add(interval).interval_values.should include(8)
+    end
+
+    it "adds another RootNoteWithIntervals" do
+      other_subject = RootNoteWithIntervals.new(Note.new("C#"), [0, 2])
+
+      subject.add(other_subject).interval_values.should == [0, 1, 2, 3, 4, 5, 7, 9, 11]
+    end
+
+    it "adds an array of intervals" do
+      other_subject = [NoteInterval.new(1), NoteInterval.new(3)]
+      subject.add(other_subject).interval_values.should == [0, 1, 2, 3, 4, 5, 7, 9, 11]
+    end
+
   end
 
-  it "adds an interval" do
-    interval = NoteInterval.new(8)
-    subject.add(interval).interval_values.should include(8)
+  describe "#remove" do
+
+    it "removes a note" do
+      note = Note.new("E")
+      subject.remove(note).interval_values.should_not include(4)
+    end
+
+    it "removes an interval" do
+      interval = NoteInterval.new(4)
+      subject.remove(interval).interval_values.should_not include(4)
+    end
+
+    it "removes a RootNoteWithIntervals" do
+      other_subject = RootNoteWithIntervals.new(Note.new("D"), [0, 2])
+
+      subject.remove(other_subject).interval_values.should == [0, 5, 7, 9, 11]
+    end
+
+    it "removes an array of intervals" do
+      other_subject = [NoteInterval.new(5), NoteInterval.new(7)]
+      subject.remove(other_subject).interval_values.should == [0, 2, 4, 9, 11]
+    end
+
   end
 
-  it "adds another RootNoteWithIntervals" do
-    other_subject = RootNoteWithIntervals.new(Note.new("C#"), [0, 2])
-
-    subject.add(other_subject).interval_values.should == [0, 1, 2, 3, 4, 5, 7, 9, 11]
-  end
-
-  it "adds an array of intervals" do
-    other_subject = [NoteInterval.new(1), NoteInterval.new(3)]
-    subject.add(other_subject).interval_values.should == [0, 1, 2, 3, 4, 5, 7, 9, 11]
-  end
 
 end
 
