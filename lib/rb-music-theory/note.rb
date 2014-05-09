@@ -3,19 +3,19 @@ module RBMusicTheory
   class Note < ValuePrimitive
 
     # define a bunch of scale instance methods  (ex: Note.major_scale)
-    NoteInterval::SCALE_SETS.each do |symbol,value|
+    NoteInterval::SCALE_SETS.each do |symbol, value|
       method_name = symbol.to_s + '_scale'
       Note.send :define_method, method_name.to_sym do
-        intervals = NoteInterval.locate_it(symbol,NoteInterval::SCALE_SETS).map{|n| NoteInterval.new(n)}
-        Scale.new(self,intervals)
+        intervals = NoteInterval.locate_it(symbol, NoteInterval::SCALE_SETS).map { |n| NoteInterval.new(n) }
+        Scale.new(self, intervals)
       end
     end
 
     # define a bunch of chord instance methods  (ex: Note.min7_chord)
-    NoteInterval::CHORD_SETS.each do |symbol,value|
+    NoteInterval::CHORD_SETS.each do |symbol, value|
       method_name = symbol.to_s + '_chord'
       Note.send :define_method, method_name.to_sym do
-        intervals = NoteInterval.locate_it(symbol,NoteInterval::CHORD_SETS).map{|n| NoteInterval.new(n)}
+        intervals = NoteInterval.locate_it(symbol, NoteInterval::CHORD_SETS).map { |n| NoteInterval.new(n) }
         Chord.new(self,intervals)
       end
     end
@@ -35,7 +35,6 @@ module RBMusicTheory
         @value = var
       end
     end
-
 
     def self.value_from_name(name)
       #The octave isn't supplied, so
@@ -61,11 +60,11 @@ module RBMusicTheory
     end
 
     def self.chord_methods
-      Note.instance_methods.select{|m| m =~ Regexp.new(/chord$/)}
+      Note.instance_methods.select { |m| m =~ Regexp.new(/chord$/) }
     end
 
     def self.scale_methods
-      Note.instance_methods.select{|m| m =~ Regexp.new(/scale$/)}
+      Note.instance_methods.select { |m| m =~ Regexp.new(/scale$/) }
     end
 
     def self.random_scale_method
@@ -77,7 +76,7 @@ module RBMusicTheory
     end
 
     def self.random_chord_or_scale_method
-      [Note.random_chord_method,Note.random_scale_method].sample
+      [Note.random_chord_method, Note.random_scale_method].sample
     end
 
   end
