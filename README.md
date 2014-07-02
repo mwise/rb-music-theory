@@ -1,5 +1,8 @@
 # rb-music-theory
 
+# This fork is deprecated
+Please check out [rb-music](https://github.com/mwise/rb-music) for a more robust and better-tested Ruby music library.
+
 ## Prerequisites
 * Ruby 1.9.2 or greater
 
